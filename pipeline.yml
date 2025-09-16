@@ -1,0 +1,91 @@
+name: Cypress Tests
+
+on:
+  push:
+    branches: [ main, develop ]
+  pull_request:
+    branches: [ main ]
+  schedule:
+    # Correr a una hora que no afecte el rendimiento del servidor, diarmentente a las 6am
+    - cron: '0 6 * * *'
+
+jobs:
+  cypress-run:
+    runs-on: ubuntu-22.04
+    strategy:
+      matrix:
+        # Correr las pruebas para 2 contenedores en paralelo
+        containers: [1, 2]
+    
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '18'
+          cache: 'npm'
+
+      - name: Install dependencies
+        run: npm ci
+
+      - name: Cypress run
+        uses: cypress-io/github-action@v6
+        with:
+          start: echo "Starting tests"
+          wait-on: 'https://automationexercise.com'
+          wait-on-timeout: 120
+          browser: chrome
+          record: true
+          parallel: true
+          group: 'Tests'
+        env:
+          # Contraseña del Dashboard record key como una variable de entorno
+          CYPRESS_RECORD_KEY: ${{ secrets.CYPRESS_RECORD_KEY }}
+          # Pasar el token de GitHub para permitir detectar con precisión una compilación frente a una recompilación
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: Upload screenshots
+        uses: actions/upload-artifact@v4
+        if: failure()
+        with:
+          name: cypress-screenshots-${{ matrix.containers }}
+          path: cypress/screenshots
+          retention-days: 7
+
+      - name: Upload videos
+        uses: actions/upload-artifact@v4
+        if: failure()
+        with:
+          name: cypress-videos-${{ matrix.containers }}
+          path: cypress/videos
+          retention-days: 7
+
+  api-health-check:
+    runs-on: ubuntu-22.04
+    steps:
+      - name: Check API Health
+        run: |
+          echo "Checking Echo Server API health..."
+          response=$(curl -s -o /dev/null -w "%{http_code}" https://echo-serv.tbxnet.com/v1/qa/test1)
+          if [ $response -eq 200 ]; then
+            echo "✅ API is healthy (Status: $response)"
+          else
+            echo "❌ API health check failed (Status: $response)"
+            exit 1
+          fi
+
+  ui-health-check:
+    runs-on: ubuntu-22.04
+    steps:
+      - name: Check UI Health
+        run: |
+          echo "Checking Automation Exercise health..."
+          response=$(curl -s -o /dev/null -w "%{http_code}" https://automationexercise.com)
+          if [ $response -eq 200 ]; then
+            echo "✅ UI is healthy (Status: $response)"
+          else
+            echo "❌ UI health check failed (Status: $response)"
+            exit 1
+          fi
