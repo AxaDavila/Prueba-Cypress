@@ -17,10 +17,11 @@ Esta misma puede ser reutilizada en un Pipeline para alinear con procesos de CI/
 
 1. Clonar el repositorio:
 git clone <https://github.com/AxaDavila/Prueba-Cypress.git>
-cd <Prueba-Cypress>
+cd Prueba-Cypress
 
 2. Instalar dependencias:
-npm install // O mejor puede instalar desde requirements
+npm install
+// O mejor puede instalar desde requirements
 pip install -r requirements.txt.
 
 si ocurre un error al descargar Instala Cypress correctamente
