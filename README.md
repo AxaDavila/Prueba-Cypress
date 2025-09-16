@@ -16,8 +16,8 @@ Esta misma puede ser reutilizada en un Pipeline para alinear con procesos de CI/
 ## Instalación Rápida
 
 1. Clonar el repositorio:
-git clone <URL_DE_TU_REPO>
-cd <CARPETA_DEL_PROYECTO>
+git clone <https://github.com/AxaDavila/Prueba-Cypress.git>
+cd <Prueba-Cypress>
 
 2. Instalar dependencias:
 npm install // O mejor puede instalar desde requirements
