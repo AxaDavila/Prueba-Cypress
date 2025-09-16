@@ -38,10 +38,10 @@ npx cypress open
 
 Para ejecutar todos los tests en modo headless:
 npm test
-# o
+# o con el comando
 npm run cy:run
 
-Para abrir test runner con UI:
+Para abrir test runner con UI/ modo interactivo:
 npm run cy:open
 
 
