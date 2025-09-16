@@ -47,13 +47,13 @@ npm run cy:open
 
 ## Descripción de los tests implementados
 
-- **registro_usuario.cy.js:** Valida el registro de un nuevo usuario en la plataforma ecommerce y la confirmación de éxito en el proceso de signup.
+- **user_register.cy.js:** Valida el registro de un nuevo usuario en la plataforma ecommerce y la confirmación de éxito en el proceso de signup.
 - **login.cy.js:** Verifica el flujo de login y la correcta autenticación en la aplicación de ecommerce.
-- **get_test1.cy.js & get_test2.cy.js:** Prueban dos endpoints de Echo Server, validando código de estado, tiempo de respuesta inferior a 3 segundos, estructura de datos en el body y headers esperados.
+- **test1.cy.js & test2.cy.js:** Prueban dos endpoints de Echo Server, validando código de estado, tiempo de respuesta inferior a 3 segundos, estructura de datos en el body y headers esperados.
 
 ## Resultados y mejoras
 
-En la carpeta **results/** o **screenshots/** se documentan bugs encontrados en la web/API o sugerencias de mejora detectadas durante la automatización  
+En la carpeta **results/** o **screenshots/** se documentan bugs con pruebas encontrados en la web/API o sugerencias de mejora detectadas durante la automatización 
 
 ## Dependencias clave
 
